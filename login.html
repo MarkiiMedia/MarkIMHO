@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/main.css">
 
     <meta charset="UTF-8">
-    <title>QUIZ IMHO</title>
+    <title>Login - Mark IMHO Quiz 2017</title>
 
 
 </head>
@@ -14,7 +14,8 @@
 
 <div class="container">
 
-    <div class="row" id="nav-container"></div>
+    <!-- Udkommenterer denne for ikke at have navigation på forsiden, da der kun skal logges ind / oprettes bruger her -->
+    <!--<div class="row" id="nav-container"></div>-->
 
     <div class="row">
         <div class="col-lg-6">
@@ -22,6 +23,7 @@
                 <h1>Login</h1>
                 <div id="load-test"></div>
             </div>
+            <form onSubmit="return false">
             <div class="form-group">
                 <label class="control-label" for="inputUser">Username</label>
                 <input type="text" class="form-control" id="inputUser" placeholder="Username">
@@ -30,7 +32,9 @@
                 <label class="control-label" for="inputPassword">Password</label>
                 <input type="password" class="form-control" id="inputPassword" placeholder="Password">
             </div>
-            <button style="margin-bottom: 40px" class="btn btn-default" id="login-button">Submit</button>
+            <button style="margin-bottom: 40px" class="btn btn-default" id="login-button">Log ind</button>
+                <button style="margin-bottom: 40px" class="btn btn-default" id="cancel-button">Cancel</button>
+            </form>
         </div>
     </div>
 

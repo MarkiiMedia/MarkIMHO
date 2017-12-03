@@ -28,4 +28,9 @@ $(document).ready(() => {
 
     });
 
+    //Gå tilbage til index siden
+    $("#cancel-button").click(() => {
+        window.location.href = "index.html";
+    });
+
 });

@@ -25,6 +25,7 @@ const SDK = {
         });
 
     },
+    //Loader min menu
     loadNav: () => {
         $("#nav-container").load("nav.html");
     },
@@ -51,45 +52,72 @@ const SDK = {
                         password: password
                     },
                     method: "POST",
-                    url: "/user/login"
+                    url: "/user/login?include=user"
                 }, (err, data) => {
 
                 //On login error
                 if (err) return cb(err);
+                console.log("login",data);
+                // data = JSON.parse (data);
+                // SDK.Storage.persist("tokenId", data.username);
+                // SDK.Storage.persist("userId", data.userId);
+                // SDK.Storage.persist("user", data.username);
+                SDK.Storage.persist("token", data.token);
 
-                SDK.Storage.persist("tokenId", data.id);
-                SDK.Storage.persist("userId", data.userId);
-                SDK.Storage.persist("user", data.user);
+
 
                 cb(null, data);
             });
 
         },
-        //Se egen info (med hardcoded token fra DB, skal ændres så det selvølgelig følger den loggede ind bruger)
+        //Se egen info (Skal nu også bruge persist her til at gemme userId, da jeg KUN tager token ved login
         myProfile: (cb) => {
             SDK.request({
                 method: "GET",
                 url: "/user/myuser",
-                headers: SDK.Storage.load("tokenId")
-                //headers: {Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VyIjoidGVzdDIiLCJpc3MiOiJJTUhPIiwiZXhwIjoxNTEwOTM5NTYzMTAzfQ.zqs-yCjRrVeQGevmEXyE-mMr114gyBqhZG85-fKn7cw"}
+                //loader token gemt under login
+                headers: {Authorization: SDK.Storage.load("token")}
             }, cb);
+        }, logOut: (cb) => {
+            // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
+            SDK.Storage.remove("token");
+            SDK.Storage.remove("chosenCourse");
         }
     },
 
     //Course delen
     Course: {
-        //Find alle courses (fag) CORS FEJL!!
+        //Find alle courses (fag)
         findAllCourses: (cb) => {
             SDK.request({
                 method: "GET",
                 url: "/course",
-                headers: {Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VyIjoidGVzdDIiLCJpc3MiOiJJTUhPIiwiZXhwIjoxNTEwOTM5NTYzMTAzfQ.zqs-yCjRrVeQGevmEXyE-mMr114gyBqhZG85-fKn7cw"}
+                headers: {Authorization: SDK.Storage.load("token")}
             }, cb);
 
 
         }
     },
-    //Sat ind 20/11 kl 18.43 for at teste om jeg kan bruge det samme som javaclient eksempel
+    //Her skal quiz delen være
+    //Jeg får mine quiz ud (hardcoded url f.eks quiz tilhørende fag 2)
+    //Istedet for hardcoded skal selvfølgelig tages det fag jeg trykkede på, på fag siden og vise quiz ud fra det fag
+    //
+    Quiz: {
+      showQuiz: (cb) => {
+          const chosenCourse = SDK.Storage.load("chosenCourse");
+          const courseId = chosenCourse.courseId;
+          SDK.request({
+              method: "GET",
+              url: "/quiz/" + courseId,
+              headers: {Authorization: SDK.Storage.load("token")}
+              }, cb);
+      }
+    },
+
+    //Storage som jeg bruger til:
+    // 1 (persist) gemme min token (og senere userId)
+    // 2 (load) loade min token (og senere userId)
+    // 3 (remove) slette mine gemte værdier (som lige nu er token, og senere også bliver userId)
     Storage: {
         prefix: "QuizSDK",
         persist: (key, value) => {

@@ -12,6 +12,7 @@ $(document).ready(() => {
         SDK.User.login(username, password, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
+                window.alert("Forkert brugernavn eller kodeord");
             }
             else if (err){
                 console.log("BAd stuff happened")
@@ -23,6 +24,11 @@ $(document).ready(() => {
             }
         });
 
+    });
+
+    //Gå tilbage til index siden
+    $("#cancel-button").click(() => {
+        window.location.href = "index.html";
     });
 
 });

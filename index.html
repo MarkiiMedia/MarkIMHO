@@ -13,43 +13,18 @@
 <body>
 
 <div class="container">
-
-    <div class="row" id="nav-container"></div>
+    <!-- Udkommenterer denne for ikke at have navigation på forsiden, da der kun skal logges ind / oprettes bruger her -->
+    <!-- <div class="row" id="nav-container"></div> -->
 
     <div class="row">
         <div class="col-lg-12">
             <div class="jumbotron">
 
-                <!--Her leger jeg med at lave en tab der bliver på samme side til log ind / opret bruger-->
-                <div>
 
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#login" aria-controls="home" role="tab" data-toggle="tab">Login</a></li>
-                        <li role="presentation"><a href="#createUser" aria-controls="profile" role="tab" data-toggle="tab">Opret bruger</a></li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="login"><h1 class="display-3">Log ind</h1>
-                            <div class="form-group">
-                                <label class="control-label" for="inputUser">Username</label>
-                                <input type="text" class="form-control" id="inputUser" placeholder="Username">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="inputPassword">Password</label>
-                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                            </div>
-                            <button style="margin-bottom: 40px" class="btn btn-default" id="login-button">Log ind</button>
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="createUser">Her skal man kunne oprette en bruger</div>
-                    </div>
-
-                </div>
-                <h1 class="display-3">Hello, world!</h1>
+                <h1 class="display-3">Velkommen til IMHO Quiz by Mark</h1>
                 <p class="lead">For at kunne deltage i disse smukke quizzes skal du være logget ind </p>
                 <hr class="my-4">
-                <p>Menuen i toppen bliver fjernet, så man kun enten kan trykke på login eller opret bruger</p>
+                <p>Menuen i toppen er fjernet, så man kun enten kan trykke på login eller opret bruger</p>
                 <p class="lead">
                     <a class="btn btn-primary btn-lg" href="login.html" role="button">Log ind</a>
                 </p>
@@ -73,8 +48,10 @@
 <script src="js/login.js"></script>
 
 
+
 <script>
-    SDK.loadNav();
+    //Ingen nav, fordi at ved startside skal man KUN kunne logge ind, eller oprette bruger
+    //SDK.loadNav();
 </script>
 
 </body>
