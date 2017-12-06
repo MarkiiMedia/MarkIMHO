@@ -23,8 +23,7 @@ $(document).ready(() => {
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">${quiz.quizTitle}</h2>
-                </div>
-                
+                </div>             
                 <div class="panel-body">
                     <div class="col-lg-8">
                       <dl>
@@ -40,7 +39,7 @@ $(document).ready(() => {
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-lg-8 text-right">
-                            <button class="btn btn-success purchase-button" data-quiz-id="${quiz.quizId}">Tag denne quiz</button>
+                            <button class="btn btn-success takeQuiz-Button" data-quiz-id="${quiz.quizId}">Tag denne quiz</button>
                         </div>
                     </div>
                 </div>
@@ -51,5 +50,18 @@ $(document).ready(() => {
 
         });
         $quizList.append(quizzesHtml);
+
+        $(".takeQuiz-Button").click(function () {
+            //Test - når jeg hertil
+            window.alert("HEJ");
+            const thisQuizId = $(this).data("quiz-id");
+            const quiz = quizzes.find(q => q.quizId === thisQuizId);
+
+            SDK.Storage.persist("chosenQuiz", quiz);
+            window.location.href = "takeQuiz.html";
+        });
+
     });
+
+
 });

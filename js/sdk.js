@@ -63,9 +63,6 @@ const SDK = {
                 // SDK.Storage.persist("userId", data.userId);
                 // SDK.Storage.persist("user", data.username);
                 SDK.Storage.persist("token", data.token);
-
-
-
                 cb(null, data);
             });
 
@@ -82,6 +79,7 @@ const SDK = {
             // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
             SDK.Storage.remove("token");
             SDK.Storage.remove("chosenCourse");
+            SDK.Storage.remove("chosenQuiz");
         }
     },
 
@@ -103,15 +101,36 @@ const SDK = {
     //Istedet for hardcoded skal selvfølgelig tages det fag jeg trykkede på, på fag siden og vise quiz ud fra det fag
     //
     Quiz: {
-      showQuiz: (cb) => {
-          const chosenCourse = SDK.Storage.load("chosenCourse");
-          const courseId = chosenCourse.courseId;
-          SDK.request({
-              method: "GET",
-              url: "/quiz/" + courseId,
-              headers: {Authorization: SDK.Storage.load("token")}
-              }, cb);
-      }
+        //Vis quizzer
+        showQuiz: (cb) => {
+            const chosenCourse = SDK.Storage.load("chosenCourse");
+            const courseId = chosenCourse.courseId;
+            SDK.request({
+                method: "GET",
+                url: "/quiz/" + courseId,
+                headers: {Authorization: SDK.Storage.load("token")}
+            }, cb);
+        },
+        //Vis spørgsmål
+        loadQuestions: (cb) => {
+            //loader først vores gemte quiz id
+            const chosenQuiz = SDK.Storage.load("chosenQuiz");
+            const quizId = chosenQuiz.quizId;
+            SDK.request({
+                method: "GET",
+                url: "/question/" + quizId,
+                headers: {Authorization: SDK.Storage.load("token")}
+            }, cb);
+        },
+        loadOptions: (cb) => {
+            const questionId = SDK.Storage.load("questionId");
+            SDK.request({
+                method: "GET",
+                url: "/option/" + questionId,
+                headers: {Authorization: SDK.Storage.load("token")}
+            }, cb);
+        }
+
     },
 
     //Storage som jeg bruger til:
