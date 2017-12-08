@@ -2,6 +2,7 @@ $(document).ready(() => {
 
     SDK.loadNav();
     const $questionList = $("#question-list");
+    const $optionsList = $("#options-list");
 
     //Vis quiz metoden
     SDK.Quiz.loadQuestions((err, questions) => {
@@ -21,59 +22,28 @@ $(document).ready(() => {
         <div class="col-lg-4 book-container">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title">${question.question} ${question.questionId}</h2>
+                    <h2 class="panel-title">${question.question} </h2>
+                    <div id="option-list${question.questionId}"></div>
                 </div>
-                <div class="panel-body">
-                    <div class="col-lg-8">
-                      <dl>          
-                        <dt>Svarmulighed:</dt>
-                        <dd>SVARMULIGHED</dd>
-                      </dl>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-lg-8 text-right">
-                        </div>
-                    </div>
-                </div>
-             </div>
-       </div>
-            `;
+            </div>
+        </div>`;
 
             SDK.Storage.persist("questionId", question.questionId);
-
             //Leg med options
             SDK.Quiz.loadOptions((err, options) => {
                 if (err) throw err;
                 console.log(options);
                 options = JSON.parse(options);
-                console.log("FUCK");
 
-                let optionsHtml = "";
+                const $optionList = $('#option-list' + question.questionId);
+
                 options.forEach(option => {
-                    optionsHtml +=`
-                    <div class="panel-body">
-                    <div class="col-lg-8">
-                      <dl>          
-                        <dt>Svarmulighed:</dt>
-                        <dd>${option.option}</dd>
-                      </dl>
-                    </div>
-                </div>
-                    `;
+                    console.log("Option: " + option.option + " Korrekt? " + option.isCorrect);
+                    $optionList.append(`<input type="radio" class="correct-or-wrong-radio" name="options${question.questionId}" value="${option.isCorrect}"> ${option.option}<br>`);
                 });
-                $questionList.append(optionsHtml)
+
             });
-
+            $questionList.append(questionsHtml);
         });
-        $questionList.append(questionsHtml);
     });
-
-
-    //Options
-
-
-
-
 });

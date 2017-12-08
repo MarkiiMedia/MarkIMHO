@@ -57,7 +57,7 @@ const SDK = {
 
                 //On login error
                 if (err) return cb(err);
-                console.log("login",data);
+                console.log("login", data);
                 // data = JSON.parse (data);
                 // SDK.Storage.persist("tokenId", data.username);
                 // SDK.Storage.persist("userId", data.userId);
@@ -67,19 +67,37 @@ const SDK = {
             });
 
         },
+        loadCurrentUser: (cb) => {
+            SDK.request({
+                method: "GET",
+                url: "/user/myuser",
+                headers: {Authorization: SDK.Storage.load("token")
+                },
+            }, (err, user) => {
+                SDK.Storage.persist("User", user);
+            },
+                cb)
+        },
+        myCurrent: () => {
+            return SDK.User.loadCurrentUser("User");
+        },
         //Se egen info (Skal nu også bruge persist her til at gemme userId, da jeg KUN tager token ved login
         myProfile: (cb) => {
             SDK.request({
                 method: "GET",
                 url: "/user/myuser",
                 //loader token gemt under login
-                headers: {Authorization: SDK.Storage.load("token")}
+                headers: {Authorization: SDK.Storage.load("token")
+                },
             }, cb);
-        }, logOut: (cb) => {
+        },
+        logOut: (cb) => {
             // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
             SDK.Storage.remove("token");
             SDK.Storage.remove("chosenCourse");
             SDK.Storage.remove("chosenQuiz");
+            SDK.Storage.remove("questionId");
+            SDK.Storage.remove("User");
         }
     },
 
@@ -129,8 +147,42 @@ const SDK = {
                 url: "/option/" + questionId,
                 headers: {Authorization: SDK.Storage.load("token")}
             }, cb);
-        }
+        },
+        deleteQuiz: (cb) => {
+            const quizToDelete = SDK.Storage.load("quizToDelete");
+            const quizId = quizToDelete.quizId;
 
+            SDK.request({
+                method: "DELETE",
+                url: "/quiz/" + quizId,
+                headers: {
+                    Authorization: SDK.Storage.load("token")
+                },
+            }, (e, data) => {
+                if (e) return cb(e);
+                cb(null, data)
+            });
+        },
+        //create a quiz
+        createQuiz: (createdBy, quizTitle, quizDescription, courseId, questionCount, cb) => {
+            SDK.request({
+                data: {
+                    createdBy: createdBy,
+                    quizTitle: quizTitle,
+                    quizDescription: quizDescription,
+                    courseId: courseId,
+                    questionCount: questionCount,
+                },
+                url: "/quiz/",
+                method: "POST",
+                headers: {
+                    authorization: SDK.Storage.load("token"),
+                }
+            }, (err, data) => {
+                if (err) return cb(err);
+                cb(null, data);
+            });
+        },
     },
 
     //Storage som jeg bruger til:

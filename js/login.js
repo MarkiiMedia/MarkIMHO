@@ -17,6 +17,8 @@ $(document).ready(() => {
             else if (err){
                 console.log("BAd stuff happened")
             } else {
+                SDK.User.loadCurrentUser();
+
                 //Egen info, bare til test lige pt
                 window.alert("Du har fået token, og burde rykke til MIN SIDE");
                 window.location.href = "minSide.html";

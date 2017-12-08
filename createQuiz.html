@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <meta charset="UTF-8">
+    <title>Opret quiz</title>
+</head>
+<body>
+
+<div class="container">
+
+
+    <div class="row" id="nav-container"></div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="page-header">
+                <h1>create quiz</h1>
+                <div id="load-test"></div>
+            </div>
+            <form onSubmit="return false">
+                <div class="form-group">
+                    <label class="control-label" for="inputCreatedBy">Created by:</label>
+                    <input type="text" class="form-control" id="inputCreatedBy" placeholder="Created by">
+                    <label class="control-label" for="inputQuizTitle">Quiz title:</label>
+                    <input type="text" class="form-control" id="inputQuizTitle" placeholder="Quiz title">
+                    <label class="control-label" for="inputQuizDescription">Quiz description:</label>
+                    <input type="text" class="form-control" id="inputQuizDescription" placeholder="Quiz description">
+                </div>
+                <button style="margin-bottom: 40px" class="btn btn-default" id="login-button">Opret quiz</button>
+                <button style="margin-bottom: 40px" class="btn btn-default" id="cancel-button">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script src="lib/js/jquery-3.2.1.js"></script>
+<script src="lib/js/bootstrap.js"></script>
+<script src="js/sdk.js"></script>
+<script src="js/minSide.js"></script>
+
+</body>
+</html>
