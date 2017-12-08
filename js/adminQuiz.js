@@ -4,7 +4,7 @@ $(document).ready(() => {
 
     //Serveren tjekker for om jeg er current user og om denne current user også er admin
     //Er det ikk tilfældet kan man ikke slette en quiz
-    const currentUser = SDK.User.myCurrent();
+    const currentUser = SDK.User.myCurrent("User");
 
     const $quizList = $("#quiz-list");
 
@@ -65,7 +65,7 @@ $(document).ready(() => {
             if (window.confirm("Are you sure u want to delete " + quiz.quizTitle + " ?") === true) {
                 SDK.Quiz.deleteQuiz((e, data) => {
                 });
-                window.alert(quiz.quizTitle + " er nu slettet!")
+                window.alert(quiz.quizTitle + " er nu slettet!");
                 location.reload();
             } else {
                 window.alert("ERROR")

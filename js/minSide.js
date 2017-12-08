@@ -8,7 +8,7 @@ $(document).ready(() => {
         if (err) throw err;
 
 
-        //user = JSON.parse(user);
+        user = JSON.parse(user);
         // console.log (user);
         //debugvar = user;
             const myUserHtml = `
