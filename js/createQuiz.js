@@ -23,10 +23,21 @@ $(document).ready(() => {
         const quizDescription = $('#inputQuizDescription').val();
         const questionCount = 0;
 
-        SDK.Quiz.createQuiz(createdBy, quizTitle, quizDescription, courseId, questionCount, (err, quiz) => {
-            console.log('Created quiz', quiz);
-            window.alert("QUIZ CALLED: " + quizTitle + "created! WUHUUU")
+        if(!quizTitle || !quizDescription || !createdBy) {
+            alert("Du mangler vist at udfylde lidt");
+        } else {
 
-        })
+            SDK.Quiz.createQuiz(createdBy, quizTitle, quizDescription, courseId, questionCount, (err, quiz) => {
+                console.log('Created quiz', quiz);
+                window.alert("QUIZ CALLED: " + quizTitle + "created! WUHUUU")
+
+                //Disse 2 hører til det udkommenterede i createQuiz.html
+                //$('#questionModal').modal('show');
+                //$("#saveBtn").hide();
+
+
+
+            })
+        }
     })
 });

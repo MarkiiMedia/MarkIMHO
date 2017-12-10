@@ -21,6 +21,12 @@
                 <div id="load-test"></div>
             </div>
             <form onSubmit="return false">
+                <div>
+                    <h3>Vælg fag:</h3>
+                    <select id="courseDropdown">
+                    <!-- Course dropdown options here -->
+                </select>
+                </div>
                 <div class="form-group">
                     <label class="control-label" for="inputCreatedBy">Created by:</label>
                     <input type="text" class="form-control" id="inputCreatedBy" placeholder="Created by">
@@ -29,9 +35,7 @@
                     <label class="control-label" for="inputQuizDescription">Quiz description:</label>
                     <input type="text" class="form-control" id="inputQuizDescription" placeholder="Quiz description">
                 </div>
-                <select id="courseDropdown">
-                    <!-- Course dropdown options here -->
-                </select>
+
                 <button style="margin-bottom: 40px" class="btn btn-default" id="create-quiz-button">Opret quiz</button>
                 <button style="margin-bottom: 40px" class="btn btn-default" id="cancel-button">Cancel</button>
             </form>
