@@ -184,6 +184,45 @@ const SDK = {
             });
         },
     },
+    // Create questions
+    createQuestion: (question, quizId, callback) => {
+        SDK.request({
+            data: {
+                question: question,
+                questionToQuizId: quizId
+            },
+            method: "POST",
+            url: "/question",
+            headers: {
+                //Header for authorization in server
+                authorization: SDK.Storage.load("token"),
+            }
+        }, (err, data) => {
+            if (err) return callback(err);
+            callback(null, data);
+        })
+    },
+
+    // Creating option
+    createOption: (option, optionToQuestionId, isCorrect, callback) => {
+        SDK.request({
+            data: {
+                option: option,
+                optionToQuestionId: optionToQuestionId,
+                isCorrect: isCorrect
+            },
+            method: "POST",
+            url: "/option",
+            headers: {
+                //Header for authorization in server
+                authorization: SDK.Storage.load("token"),
+            }
+        }, (err, data) => {
+            if (err) return callback(err);
+            callback(null, data);
+        })
+    },
+
 
     //Storage som jeg bruger til:
     // 1 (persist) gemme min token (og senere userId)
