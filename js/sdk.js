@@ -91,7 +91,7 @@ const SDK = {
                 },
             }, cb);
         },
-        logOut: (cb) => {
+        logOut: (userId, cb) => {
             // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
             SDK.Storage.remove("token");
             SDK.Storage.remove("chosenCourse");

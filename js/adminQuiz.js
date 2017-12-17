@@ -43,7 +43,7 @@ $(document).ready(() => {
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-lg-8 text-right">
-                            <button class="btn btn-primary delete-button" data-delete-quiz-id=${quiz.quizId}> Delete quiz</button>
+                            <button class="btn btn-danger delete-button" data-delete-quiz-id=${quiz.quizId}> Delete quiz</button>
                         </div>
                     </div>
                 </div>

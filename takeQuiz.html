@@ -23,6 +23,33 @@
 
 </div>
 
+<!--Tester her 2 knapper - return og submit-->
+<div class="modal-footer">
+    <button class="btn btn-danger" id="backToQuizBtn">Return to quizzes</button>
+    <button class="btn btn-success" id="saveAnswersBtn">Submit answers</button>
+</div>
+
+
+<!--Modal fade til submit answers / result -->
+<div class="container">
+    <div class="modal fade bd-example-modal-lg" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h1>Your answers:</h1>
+                    <div class="modal-body">
+                        <p id="result"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="closeBtn btn btn-default" id="closeBtn">Close</button>
+                        <button class="tryNewQuiz btn btn-default" id="tryNewQuiz">Try another quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="lib/js/jquery-3.2.1.js"></script>
