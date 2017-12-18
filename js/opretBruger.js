@@ -13,7 +13,10 @@ $(document).ready(() => {
 
         // Bruger metoden i SDK filen og hvis fejl så dette, og hvis succes (else) redirect til login
         SDK.User.createNewUser(username, password, (err, data) => {
-            if (err && err.xhr.status === 401) {
+            if(!username || !password) {
+                alert("Du mangler vist at udfylde lidt");
+            }
+            else if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
             }
             else if (err){
@@ -21,7 +24,7 @@ $(document).ready(() => {
             } else {
                 window.location.href = "login.html";
                 //NOTE: Skal ligge lidt anderledes i koden så den vises EFTER vi er rykket til login siden
-                window.alert("Du kam nu logge ind med din oprettede bruger")
+                window.alert("Du kan nu logge ind med din oprettede bruger")
             }
 
         });

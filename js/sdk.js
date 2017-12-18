@@ -25,11 +25,6 @@ const SDK = {
         });
 
     },
-    //Loader min menu
-    loadNav: () => {
-        $("#nav-container").load("nav.html")
-    },
-
     //User delen
     User: {
         //Opret bruger
@@ -99,7 +94,7 @@ const SDK = {
 
             });
         },
-        logOut: (userId) => {
+        logOut: (cb) => {
             //FEJLER KONSTANT MED LOG UD!! fejl 500 cb is not an function
             // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
             SDK.request({
@@ -118,6 +113,26 @@ const SDK = {
             SDK.Storage.remove("type");
             SDK.Storage.remove("userId");
         }
+    },
+
+    //Loader min menu
+    //KOMMER DOG FØRST FREM VED F5 eller ny side! KOMMER IKKE PÅ MINSIDE.html ved første load...
+    loadNav: (cb) => {
+        $("#nav-container").load("nav.html", () => {
+            const type = SDK.Storage.load("type");
+            if (type === 1) {
+                $(".navbar-right").html(`
+            <li><a href="createQuiz.html">Opret Quiz</a></li>
+            <li><a href="adminCourse.html">Slet Quiz</a></li>
+          `);
+            } else if (type === 2){
+                $(".navbar-right").html(`
+            <li><a href="#"><span class="sr-only">(type)</span></a></li>
+          `);
+            }
+            $("#logout-link").click(() => SDK.User.logOut());
+            cb && cb();
+        });
     },
     //Course delen
     Course: {

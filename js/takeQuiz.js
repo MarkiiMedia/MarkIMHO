@@ -82,6 +82,8 @@ $(document).ready(() => {
                     <p>You got <b>${correctAnswers}</b> out of <b>${totalQuestions}</b> questions correct.</p>
                     <p> Click "CLOSE" to try again, or click "TRY ANOTHER QUIZ" to choose a new quiz!</p>`);
 
+
+
     //Lytter på close knap
     $("#closeBtn").on("click", () => {
         //Clearer result (ellers står det dobbelt hvis der svares igen og trykker submit answers)

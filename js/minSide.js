@@ -22,11 +22,11 @@ $(document).ready(() => {
                     </div>
                     <div class="col-lg-8">
                       <dl>
-                        <dt>Type - 1 Admin, 2 Bruger</dt>
+                        <dt>Type - 1, Admin, 2, Bruger:</dt>
                         <dd>${user.type}</dd>
-                        <dt>Bruger id</dt>
+                        <dt>Bruger id:</dt>
                         <dd>${user.userId}</dd>
-                        <dt>Time created</dt>
+                        <dt>Time created:</dt>
                         <dd>${user.timeCreated}</dd>
                       </dl>
                     </div>

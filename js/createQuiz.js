@@ -29,7 +29,7 @@ $(document).ready(() => {
             //SDK request create quiz
             SDK.Quiz.createQuiz(createdBy, quizTitle, quizDescription, courseId, questionCount, (err, data) => {
                 console.log('Created quiz', data);
-                window.alert("QUIZ CALLED: " + quizTitle + "created! WUHUUU");
+                window.alert("QUIZ CALLED: " + quizTitle + " created! WUHUUU");
 
                 //Upon created quiz, shows my modal from my HTML - hiding the saveButton
                 $('#questionModal').modal('show');
