@@ -1,5 +1,6 @@
 $(document).ready(() => {
 
+
     SDK.loadNav();
 
     const $myUserList = $("#myUserInfo");
