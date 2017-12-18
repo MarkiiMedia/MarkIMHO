@@ -43,11 +43,10 @@ $(document).ready(() => {
                     $optionList.append(`<input type="radio" class="correct-wrong-radio" name="options${question.questionId}" value="${option.isCorrect}"> ${option.option}<br>`);
                 });
 
-
-
         });
-            $questionList.append(questionsHtml);
+
     });
+        $questionList.append(questionsHtml);
 
     //TEST TIL KNAP LISTENERS
     //Lytter til tilbage knap

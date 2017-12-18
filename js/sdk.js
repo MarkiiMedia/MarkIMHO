@@ -27,7 +27,7 @@ const SDK = {
     },
     //Loader min menu
     loadNav: () => {
-        $("#nav-container").load("nav.html");
+        $("#nav-container").load("nav.html")
     },
 
     //User delen
@@ -89,18 +89,36 @@ const SDK = {
                 //loader token gemt under login
                 headers: {Authorization: SDK.Storage.load("token")
                 },
-            }, cb);
+            },(err, data) => {
+                if (err) return cb(err);
+
+                let altdata = JSON.parse(data);
+                SDK.Storage.persist("userId", altdata.userId);
+                SDK.Storage.persist("type", altdata.type);
+                cb(null, data);
+
+            });
         },
-        logOut: (userId, cb) => {
+        logOut: (userId) => {
+            //FEJLER KONSTANT MED LOG UD!! fejl 500 cb is not an function
             // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
+            SDK.request({
+                method: 'POST',
+                url: '/user/logout',
+                data: {userId: SDK.Storage.load("userId")},
+            }, (err, data) => {
+                if (err) return cb(err);
+                cb(null, data);
+            });
             SDK.Storage.remove("token");
             SDK.Storage.remove("chosenCourse");
             SDK.Storage.remove("chosenQuiz");
             SDK.Storage.remove("questionId");
             SDK.Storage.remove("User");
+            SDK.Storage.remove("type");
+            SDK.Storage.remove("userId");
         }
     },
-
     //Course delen
     Course: {
         //Find alle courses (fag)
