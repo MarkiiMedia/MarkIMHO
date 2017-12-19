@@ -53,7 +53,7 @@ $(document).ready(() => {
 
         $(".takeQuiz-Button").click(function () {
             //Test - når jeg hertil
-            window.alert("HEJ");
+            window.alert("Du valgte en quiz og vil nu se spørgsmål og svarmuligheder til valgte");
             const thisQuizId = $(this).data("quiz-id");
             const quiz = quizzes.find(q => q.quizId === thisQuizId);
 

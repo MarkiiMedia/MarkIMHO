@@ -96,7 +96,7 @@ const SDK = {
         },
         logOut: (cb) => {
             var userId = SDK.Storage.load("userId");
-            console.log("Bruger med userID " + userId + " blev logget ud!");
+            window.alert("Bruger med userID " + userId + " blev logget ud!");
             // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
             SDK.request({
                 method: 'POST',
