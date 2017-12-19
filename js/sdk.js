@@ -53,10 +53,6 @@ const SDK = {
                 //On login error
                 if (err) return cb(err);
                 console.log("login", data);
-                // data = JSON.parse (data);
-                // SDK.Storage.persist("tokenId", data.username);
-                // SDK.Storage.persist("userId", data.userId);
-                // SDK.Storage.persist("user", data.username);
                 SDK.Storage.persist("token", data.token);
                 cb(null, data);
             });
@@ -76,7 +72,7 @@ const SDK = {
         myCurrent: () => {
             return SDK.User.loadCurrentUser("User");
         },
-        //Se egen info (Skal nu også bruge persist her til at gemme userId, da jeg KUN tager token ved login
+        //Se egen info (Persister userId og type til at logge ud og vise bestemt menu alt efter type
         myProfile: (cb) => {
             SDK.request({
                 method: "GET",
@@ -97,7 +93,6 @@ const SDK = {
         logOut: (cb) => {
             var userId = SDK.Storage.load("userId");
             window.alert("Bruger med userID " + userId + " blev logget ud!");
-            // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
             SDK.request({
                 method: 'POST',
                 url: '/user/logout',
@@ -106,6 +101,7 @@ const SDK = {
                 if (err) return cb(err);
                 cb(null, data);
             });
+            // Sletter alt der er blevet persistet
             SDK.Storage.remove("token");
             SDK.Storage.remove("chosenCourse");
             SDK.Storage.remove("chosenQuiz");
@@ -149,10 +145,7 @@ const SDK = {
 
         }
     },
-    //Her skal quiz delen være
-    //Jeg får mine quiz ud (hardcoded url f.eks quiz tilhørende fag 2)
-    //Istedet for hardcoded skal selvfølgelig tages det fag jeg trykkede på, på fag siden og vise quiz ud fra det fag
-    //
+    //Quiz delen
     Quiz: {
         //Vis quizzer
         showQuiz: (cb) => {
@@ -260,9 +253,9 @@ const SDK = {
 
 
     //Storage som jeg bruger til:
-    // 1 (persist) gemme min token (og senere userId)
-    // 2 (load) loade min token (og senere userId)
-    // 3 (remove) slette mine gemte værdier (som lige nu er token, og senere også bliver userId)
+    // 1 (persist) gemme min token
+    // 2 (load) loade min token
+    // 3 (remove) slette mine gemte værdier
     Storage: {
         prefix: "QuizSDK",
         persist: (key, value) => {
