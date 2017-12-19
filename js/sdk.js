@@ -96,7 +96,7 @@ const SDK = {
         },
         logOut: (cb) => {
             var userId = SDK.Storage.load("userId");
-            console.log(userId);
+            console.log("Bruger med userID " + userId + " blev logget ud!");
             // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
             SDK.request({
                 method: 'POST',
@@ -113,6 +113,7 @@ const SDK = {
             SDK.Storage.remove("User");
             SDK.Storage.remove("type");
             SDK.Storage.remove("userId");
+            SDK.Storage.remove("quizToDelete");
         }
     },
 
