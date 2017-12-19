@@ -95,12 +95,13 @@ const SDK = {
             });
         },
         logOut: (cb) => {
-            //FEJLER KONSTANT MED LOG UD!! fejl 500 cb is not an function
+            var userId = SDK.Storage.load("userId");
+            console.log(userId);
             // Her skal jeg også huske faktisk at trække metoden fra SERVEREN så token også bliver slettet i DB (lige pt slettes den bare i localstorage)
             SDK.request({
                 method: 'POST',
                 url: '/user/logout',
-                data: {userId: SDK.Storage.load("userId")},
+                data: userId,
             }, (err, data) => {
                 if (err) return cb(err);
                 cb(null, data);

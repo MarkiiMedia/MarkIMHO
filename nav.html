@@ -21,7 +21,13 @@
                     <li><a href="courses.html">Quiz</a></li>
                     <li><a href="index.html" id="logout-button">Log ud</a></li>
                     <!-- Skal nok rykkes, men fjerner det jeg har gemt i min persist -->
-                    <script>$("#logout-button").click(() => SDK.User.logOut())</script>
+                    <script>
+                        $("#logout-button").click(() => {
+                                SDK.User.logOut((err, data) => {
+                                   console.log(err);
+                                });
+                        });
+                    </script>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
