@@ -1,22 +1,25 @@
 $(document).ready(() => {
 
+    //Loading navigation
     SDK.loadNav();
 
     const $quizList = $("#quiz-list");
 
-    //Vis quiz metoden
+    //SDK request show quiz
     SDK.Quiz.showQuiz((err, quizzes) => {
         if (err) throw err;
 
-        //Smider lige en console log ud så jeg kan se hvad den får ud i loggen
+        //Console log (testing)
         console.log(quizzes);
 
-        //Loader mit valgte fag, og viser de relevante quizzes
+        //Loading my choosenCourse from storage
         const course = SDK.Storage.load("chosenCourse");
 
-        //Laver det parset!!! DET VAR FEJLEN - Skal være sådan ellers får jeg fejl: Uncaught TypeError: courses.forEach is not a function
+
         quizzes = JSON.parse(quizzes);
         let quizzesHtml = "";
+
+        //For each quiz, do this
         quizzes.forEach(quiz => {
             quizzesHtml += `
         <div class="col-lg-4 book-container">
@@ -46,11 +49,16 @@ $(document).ready(() => {
             </div>
         </div>`;
             debugvar = quiz;
-            // $courseList.append(courseHtml);
+
 
         });
+        //Appending
         $quizList.append(quizzesHtml);
 
+        //On click
+        // Find quizID,
+        //Persist quiz id, now named quiz
+        //Move to takeQuiz.html
         $(".takeQuiz-Button").click(function () {
             //Test - når jeg hertil
             window.alert("Du valgte en quiz og vil nu se spørgsmål og svarmuligheder til valgte");
@@ -62,6 +70,5 @@ $(document).ready(() => {
         });
 
     });
-
 
 });

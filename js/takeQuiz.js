@@ -1,22 +1,27 @@
 $(document).ready(() => {
 
+    //Loading navigation
     SDK.loadNav();
+
     const $questionList = $("#question-list");
     const $optionsList = $("#options-list");
 
-    //Vis quiz metoden
+    //SDK request load questions
     SDK.Quiz.loadQuestions((err, questions) => {
         if (err) throw err;
 
-        //Smider lige en console log ud så jeg kan se hvad den får ud i loggen
+        //Console log (testing)
         console.log(questions);
 
-        //Loader mit valgte fag, og viser de relevante quizzes
+
+        //Loading chosenQuiz from storage
         const quiz = SDK.Storage.load("chosenQuiz");
 
-        //Laver det parset!!! DET VAR FEJLEN - Skal være sådan ellers får jeg fejl: Uncaught TypeError: courses.forEach is not a function
+
         questions = JSON.parse(questions);
         let questionsHtml = "";
+
+        //For each questing, doing this
         questions.forEach(question => {
             questionsHtml += `
         <div class="col-lg-4 book-container">
@@ -28,8 +33,9 @@ $(document).ready(() => {
             </div>
         </div>`;
 
+            //Persisting questionid
             SDK.Storage.persist("questionId", question.questionId);
-            //Leg med options
+            //SDK request to get options
             SDK.Quiz.loadOptions((err, options) => {
                 if (err) throw err;
                 console.log(options);
@@ -37,7 +43,7 @@ $(document).ready(() => {
 
                 const $optionList = $('#option-list' + question.questionId);
 
-                //For hver opting laver jeg en radio button med isCorrect og questionId
+                //For each option, creating radiobutton with question id and isCorrect
                 options.forEach(option => {
                     console.log("Option: " + option.option + " Korrekt? " + option.isCorrect);
                     $optionList.append(`<input type="radio" class="correct-wrong-radio" name="options${question.questionId}" value="${option.isCorrect}"> ${option.option}<br>`);
@@ -46,36 +52,38 @@ $(document).ready(() => {
         });
 
     });
+        //Appending
         $questionList.append(questionsHtml);
 
-    //TEST TIL KNAP LISTENERS
-    //Lytter til tilbage knap
+
+    // on click back to quiz.html
     $("#backToQuizBtn").on("click", () => {
         window.location.href = "Quiz.html";
     });
 
-    //Lytter til gem knap
+    //on click
     $("#saveAnswersBtn").on("click", () => {
         let totalQuestions = 0;
         let correctAnswers = 0;
 
         //Tæller om radio button er checked, hvis tæller en op
+        //Checking if radio buttin is checked, if yes ++
         $(".correct-wrong-radio").each(function () {
             if ($(this).is(":checked")) {
                 totalQuestions++;
-                //Hvis this er 1, altså korrekt, tæller en op
+                //Checking if value is 1, meaning correct answer, if yes ++
                 if ($(this).val() == 1) {
                     correctAnswers++;
                 }
             }
         });
 
-    //Procent af korrekte ud af totale questions
+    //Procent of correct out of total questions
     const quizWidth = correctAnswers/totalQuestions*100;
 
-    //Modal vis
+    //showing submit modal
     $('#submitModal').modal('show');
-    // Modal vindue, med progress bar + score
+    // showing resultmodal with result and progress bar
     $("#result").append(`
                     <div><div class="progress">
                     <div class="progress-bar progress-bar-info progress-bar-striped" style="width:${quizWidth}%"></div></div>
@@ -84,14 +92,17 @@ $(document).ready(() => {
 
 
 
-    //Lytter på close knap
+    //on click
     $("#closeBtn").on("click", () => {
-        //Clearer result (ellers står det dobbelt hvis der svares igen og trykker submit answers)
+        //Clearering result
+        //if not, it would display double upon pressing submit again
+        //Hiding submitmodal
         $("#result").html("");
         $('#submitModal').modal('hide');
     });
 
     //Lytter til tag en anden quiz knap
+        //on click
         $("#tryNewQuiz").on("click", () => {
             //Going back to quiz site
             window.location.href= "Quiz.html";

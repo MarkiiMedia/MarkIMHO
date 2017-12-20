@@ -1,21 +1,18 @@
 $(document).ready(() => {
 
-    //CurrentUser har adgang til at oprette en quiz. Fordi current er admin
+    // CurrentUser to check for admin status, to create a quiz
     const currentUser = SDK.User.myCurrent();
+
 
     SDK.Course.findAllCourses((err, courses) => {
         courses = JSON.parse(courses);
-        //console.log('courses:', courses);
-        // let optionMenu = `<option> Select Course </option>`;
-       //  optionMenu += `<option value="+${courses[0].courseId}+"> ${courses[0].courseTitle} </option>`;
-       //  $('#courseDropdown').innerHTML = optionMenu;
 
-        //Dropdown til at vise course og så derudfra course id
+        // Dropdown to show courses, with corresponding courseId
         $.each(courses, (key, value) => {
             $('#courseDropdown').append('<option value='+ value.courseId + '>'+ value.courseTitle +'</option>')
         })
     });
-        //På create quiz knappen sker dette. Den tager mine values og kører min createQuiz funktion
+    // When button clicked values are taken from the corresponding fields
     $('#create-quiz-button').on('click', () => {
         const courseId = $('#courseDropdown').val();
         const createdBy = $('#inputCreatedBy').val();
@@ -23,6 +20,7 @@ $(document).ready(() => {
         const quizDescription = $('#inputQuizDescription').val();
         const questionCount = 0;
 
+        // If title, description or createdby is empty, error message
         if(!quizTitle || !quizDescription || !createdBy) {
             alert("Du mangler vist at udfylde lidt");
         } else {
@@ -31,19 +29,19 @@ $(document).ready(() => {
                 console.log('Created quiz', data);
                 window.alert("QUIZ CALLED: " + quizTitle + " created! WUHUUU");
 
-                //Upon created quiz, shows my modal from my HTML - hiding the saveButton
+                // When quiz created, display questionmodal from HTML, hiding savebutton
                 $('#questionModal').modal('show');
                 $("#save-Button").hide();
 
-                //Saving the quiz id of the quiz as a const
+                // Saving quiz
                 var createdQuiz = JSON.parse(data);
                 const quizId = createdQuiz.quizId;
 
-                //Modal title
+                // Modal title
                 var i = 1;
                 $(".modal-title").html(`<h1>${i}. Question</h1>`);
 
-                //Listener on add question button
+                // On click
                 $("#addQuestion-Button").on("click", () => {
                     //Saving question and option values as const
                     const createdQuestion = $("#question").val();
@@ -52,10 +50,10 @@ $(document).ready(() => {
                     const wrong2 = $("#wrong2").val();
                     const wrong3 = $("#wrong3").val();
 
-                    //Verifying that all the info has been filled
+                    //Verifying that all the info has been filled in
                     if (!createdQuestion || !correct || !wrong1 || !wrong2 || !wrong3) {
                         alert("Information missing - Please try again");
-                        //Clearing all the text boxes
+                        //Clearing all the textboxes
                         $("#question").val("");
                         $("#correct").val("");
                         $("#wrong1").val("");
@@ -71,7 +69,7 @@ $(document).ready(() => {
                                 window.alert("An error has occurred. Please try again");
                             } else {
                                 $("#save-Button").show();
-                                //Clearing the question text box
+                                //Clearing the question textbox
                                 $("#question").val("");
 
                                 //Saving questionId as const
@@ -134,7 +132,7 @@ $(document).ready(() => {
                 });
                 //Listener on save quiz button
                 $("#save-Button").on("click", () => {
-                    //window to confirm saving the quiz
+                    //window to confirm that you are done
                     if (window.confirm("Are you done with the quiz?")) {
                         window.location.href = "minSide.html"
                     }

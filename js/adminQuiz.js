@@ -1,24 +1,24 @@
 $(document).ready(() => {
 
+    //Loading navigation
     SDK.loadNav();
 
-    //Serveren tjekker for om jeg er current user og om denne current user også er admin
-    //Er det ikk tilfældet kan man ikke slette en quiz
+    //Current user, used for checking for admin status
     const currentUser = SDK.User.myCurrent("User");
 
     const $quizList = $("#quiz-list");
 
-    //Vis quiz metoden
+    //Show quiz
     SDK.Quiz.showQuiz((err, quizzes) => {
         if (err) throw err;
 
-        //Smider lige en console log ud så jeg kan se hvad den får ud i loggen
+        //Console log (debug)
         console.log(quizzes);
 
-        //Loader mit valgte fag, og viser de relevante quizzes
+        //Loading choosen course
         const course = SDK.Storage.load("chosenCourse");
 
-        //Laver det parset!!! DET VAR FEJLEN - Skal være sådan ellers får jeg fejl: Uncaught TypeError: courses.forEach is not a function
+        //For each quiz create this content
         quizzes = JSON.parse(quizzes);
         let quizzesHtml = "";
         quizzes.forEach(quiz => {
@@ -53,8 +53,12 @@ $(document).ready(() => {
             // $courseList.append(courseHtml);
 
         });
+        //Appending
         $quizList.append(quizzesHtml);
 
+        //On delete button click
+        //Getting quizId on selected, and persist
+        // Delete and reload
         $(".delete-button").click(function () {
             //Test - når jeg hertil
             window.alert("Slette quiz, nået hertil?");

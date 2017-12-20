@@ -1,17 +1,20 @@
 $(document).ready(() => {
 
+    // Loading navigation
     SDK.loadNav();
 
-    //Når der klikkes på knappen
+    // When button clicked
     $("#createUser-button").click(() => {
         //Simpel log, brugt for at tjekke om den registerer at jeg trykker på knappen
         console.log("Du trykkede på create user knappen, så langt så godt");
 
-        //Tager værdien fra disse 2 bokse, altså brugernavn og kodeord
+        //values from these two fields
         const username = $("#inputCreateUserName").val();
         const password = $("#inputCreateUserPassword").val();
 
-        // Bruger metoden i SDK filen og hvis fejl så dette, og hvis succes (else) redirect til login
+        // SDK request create new user
+        // If username and password not filled, alert
+        // else go to login and info message
         SDK.User.createNewUser(username, password, (err, data) => {
             if(!username || !password) {
                 alert("Du mangler vist at udfylde lidt");
@@ -31,7 +34,7 @@ $(document).ready(() => {
 
     });
 
-    //Gå tilbage til index siden
+    //On click go back to index.html
     $("#cancel-button").click(() => {
         window.location.href = "index.html";
     });

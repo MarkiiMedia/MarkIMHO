@@ -1,17 +1,20 @@
 $(document).ready(() => {
 
+    //Loading navigation
     SDK.loadNav();
 
     const $courseList = $("#course-list");
 
-    // Find alle fag metoden
+    // Finding all courses
     SDK.Course.findAllCourses((err, courses) => {
         if (err) throw err;
-        //Smider lige en console log ud så jeg kan se hvad den får ud i loggen
+        //Console (debug)
         console.log(courses);
-        //Laver det parset!!! DET VAR FEJLEN - Skal være sådan ellers får jeg fejl: Uncaught TypeError: courses.forEach is not a function
+
         courses = JSON.parse(courses);
         let coursesHtml = "";
+
+        //For each course, do this
         courses.forEach(course => {
             coursesHtml += `
         <div class="col-lg-4 book-container">
@@ -32,11 +35,13 @@ $(document).ready(() => {
 
 
         });
+        //Append
         $courseList.append(coursesHtml);
 
-        //Når der trykkes på knappen
-        // 1. Jeg gemmer courseId'et som hører til den jeg trykker på i min storage
-        // 2. Rykker over til quiz.html siden for at vise de quiz der hører til det valgte fag
+        //When pressing button
+        // 1. Saving course id for the selected course
+        // 2. Persisting the above ID
+        // 3. Moving to quiz.html
         $(".purchase-button").click(function () {
             const thisCourseId = $(this).data("course-id");
             const course = courses.find(c => c.courseId === thisCourseId);

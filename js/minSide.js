@@ -1,10 +1,11 @@
 $(document).ready(() => {
 
-
+    //Loading navigation
     SDK.loadNav();
 
     const $myUserList = $("#myUserInfo");
 
+    //SDK request myprofile
     SDK.User.myProfile((err, user) => {
         if (err) throw err;
 
@@ -12,6 +13,7 @@ $(document).ready(() => {
         user = JSON.parse(user);
         // console.log (user);
         //debugvar = user;
+        //building userpage
             const myUserHtml = `
         <div class="col-lg-4 book-container">
             <div class="panel panel-default">
@@ -35,8 +37,7 @@ $(document).ready(() => {
             </div>
         </div>`;
 
-        // let myUserHtml = "<h3>test</h3>";
-
+            //Appending
             $myUserList.append(myUserHtml);
     });
 });

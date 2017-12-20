@@ -25,9 +25,8 @@ const SDK = {
         });
 
     },
-    //User delen
+    //User part
     User: {
-        //Opret bruger
         createNewUser: (username, password, cb) => {
             SDK.request({
                     data: {
@@ -39,7 +38,7 @@ const SDK = {
                 },
                 cb);
         },
-        //Login
+
         login: (username, password, cb) => {
             SDK.request({
                     data: {
@@ -72,7 +71,6 @@ const SDK = {
         myCurrent: () => {
             return SDK.User.loadCurrentUser("User");
         },
-        //Se egen info (Persister userId og type til at logge ud og vise bestemt menu alt efter type
         myProfile: (cb) => {
             SDK.request({
                 method: "GET",
@@ -101,7 +99,7 @@ const SDK = {
                 if (err) return cb(err);
                 cb(null, data);
             });
-            // Sletter alt der er blevet persistet
+            // Deleting everything persistet
             SDK.Storage.remove("token");
             SDK.Storage.remove("chosenCourse");
             SDK.Storage.remove("chosenQuiz");
@@ -112,9 +110,7 @@ const SDK = {
             SDK.Storage.remove("quizToDelete");
         }
     },
-
-    //Loader min menu
-    //KOMMER DOG FØRST FREM VED F5 eller ny side! KOMMER IKKE PÅ MINSIDE.html ved første load...
+    //Menubar, with different points, depending on usertype
     loadNav: (cb) => {
         $("#nav-container").load("nav.html", () => {
             const type = SDK.Storage.load("type");
@@ -132,9 +128,8 @@ const SDK = {
             cb && cb();
         });
     },
-    //Course delen
+    //Course part
     Course: {
-        //Find alle courses (fag)
         findAllCourses: (cb) => {
             SDK.request({
                 method: "GET",
@@ -145,9 +140,8 @@ const SDK = {
 
         }
     },
-    //Quiz delen
+    //Quiz part
     Quiz: {
-        //Vis quizzer
         showQuiz: (cb) => {
             const chosenCourse = SDK.Storage.load("chosenCourse");
             const courseId = chosenCourse.courseId;
@@ -157,7 +151,7 @@ const SDK = {
                 headers: {Authorization: SDK.Storage.load("token")}
             }, cb);
         },
-        //Vis spørgsmål
+
         loadQuestions: (cb) => {
             //loader først vores gemte quiz id
             const chosenQuiz = SDK.Storage.load("chosenQuiz");
@@ -191,7 +185,6 @@ const SDK = {
                 cb(null, data)
             });
         },
-        //create a quiz
         createQuiz: (createdBy, quizTitle, quizDescription, courseId, questionCount, cb) => {
             SDK.request({
                 data: {
@@ -212,7 +205,6 @@ const SDK = {
             });
         },
     },
-    // Create questions
     createQuestion: (question, quizId, callback) => {
         SDK.request({
             data: {
@@ -230,8 +222,6 @@ const SDK = {
             callback(null, data);
         })
     },
-
-    // Creating option
     createOption: (option, optionToQuestionId, isCorrect, callback) => {
         SDK.request({
             data: {
@@ -252,10 +242,10 @@ const SDK = {
     },
 
 
-    //Storage som jeg bruger til:
-    // 1 (persist) gemme min token
-    // 2 (load) loade min token
-    // 3 (remove) slette mine gemte værdier
+    //Storage used to
+    // 1 (persist) saving
+    // 2 (load) loading my persisted info
+    // 3 (remove) delete my persisted info
     Storage: {
         prefix: "QuizSDK",
         persist: (key, value) => {
