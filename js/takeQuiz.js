@@ -87,8 +87,8 @@ $(document).ready(() => {
     $("#result").append(`
                     <div><div class="progress">
                     <div class="progress-bar progress-bar-info progress-bar-striped" style="width:${quizWidth}%"></div></div>
-                    <p>You got <b>${correctAnswers}</b> out of <b>${totalQuestions}</b> questions correct.</p>
-                    <p> Click "CLOSE" to try again, or click "TRY ANOTHER QUIZ" to choose a new quiz!</p>`);
+                    <p>Du fik <b>${correctAnswers}</b> ud af <b>${totalQuestions}</b> spørgsmål korrekt</p>
+                    <p> Tryk på close for at prøve igen eller tryk på try another quiz for at prøve kræfter med en anden quiz!</p>`);
 
 
 
